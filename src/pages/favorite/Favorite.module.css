@@ -1,0 +1,65 @@
+.button {
+    display: flex;
+    padding: 8px;
+    border: 1px solid #9e9e9e;
+    border-radius: 3px;
+    line-height: 1;
+    color: #9e9e9e;
+}
+
+.button:hover, .button:focus, .button_active {
+    color: #fff;
+    background-color: #e53935;
+    border-color: #e53935;
+}
+
+.favorites {
+    flex-wrap: wrap;
+    margin: 0 -0.95vw;
+}
+
+.favorite {
+    width: 100%;
+    padding: 0.8em 1vw;
+}
+
+.favorite_movie {
+    display: flex;
+}
+
+.favorite_movie__poster {
+    width: 40%;
+    min-width: 120px;
+}
+
+.favorite_movie__info {
+    width: 60%;
+    padding-left: 1em;
+}
+
+.favorite_movie__title {
+    margin: 0.5em 0;
+    font-size: 1.1em;
+    font-weight: bold;
+}
+
+@media screen and (min-width: 768px) {
+    .favorite_movie__poster {
+        width: 20%;
+        min-width: 250px;
+    }
+
+    .favorite_movie__info {
+        width: 80%;
+        padding-left: 5em;
+    }
+
+    .favorite_movie__title {
+        font-size: 1.5em;
+    }
+
+    .favorite_movie__overview {
+        padding: 1.5em 0;
+        line-height: 1.5;
+    }
+}

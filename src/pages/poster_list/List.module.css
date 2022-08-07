@@ -1,0 +1,25 @@
+.posters {
+    flex-wrap: wrap;
+    margin: 0 -0.95vw;
+}
+
+.poster {
+    width: 40%;
+    min-width: 120px;
+    padding: 0.8em 1vw;
+}
+
+.poster > a {
+    display: flex;
+    height: 100%;
+    border-radius: 10px;
+    box-shadow: 0 0 10px 3px #616161;
+    overflow: hidden;
+}
+
+@media screen and (min-width: 768px) {
+    .poster {
+        width: 20%;
+        min-width: 250px;
+    }
+}
