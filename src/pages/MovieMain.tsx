@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {FC} from 'react';
 import {Navigate, Route, Routes} from 'react-router-dom';
 import List from './poster_list/List';
 import Favorite from './favorite/Favorite';
@@ -12,18 +12,14 @@ const routeList = [
     {path: '/:page/movie/:id', element: <Modal/>}
 ];
 
-const MovieMain: React.FC = () => {
+const MovieMain: FC = () => {
     return (
         <main>
             <Routes>
                 {
                     routeList.map((route) => {
                         return (
-                            <Route
-                                path={route.path}
-                                element={route.element}
-                                key={route.path}
-                            />
+                            <Route path={route.path} element={route.element} key={route.path}/>
                         )
                     })
                 }

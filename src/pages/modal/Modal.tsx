@@ -1,7 +1,7 @@
-import React, {useCallback, useEffect} from 'react';
+import React, {FC, useCallback, useEffect} from 'react';
 import {Link, useParams} from 'react-router-dom';
 import {observer} from 'mobx-react';
-import {favStore, fetStore} from '../../stores';
+import {favoriteStorage, movieStorage} from '../../stores';
 import style from './Modal.module.css';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faChevronRight, faChevronLeft} from '@fortawesome/free-solid-svg-icons';
@@ -14,15 +14,15 @@ export interface IModalParams {
     readonly id?: string;
 }
 
-const Modal: React.FC = () => {
+const Modal: FC = () => {
     const {page = 1, id = 1} = useParams() as IModalParams;
-    const currentMovie = fetStore.results?.[fetStore.movieIndex];
+    const currentMovie = movieStorage.results?.[movieStorage.movieIndex];
 
     useEffect(() => {
-        favStore.updateFavList();
-        fetStore.setMovieId(+id);
-        fetStore.fetchPage(+page);
-        fetStore.setNpMovieId(+page);
+        favoriteStorage.updateFavList();
+        movieStorage.setMovieId(+id);
+        movieStorage.fetchPage(+page);
+        movieStorage.setNpMovieId(+page);
     }, [page, id]);
 
     useEffect(() => {
@@ -30,7 +30,7 @@ const Modal: React.FC = () => {
     }, [currentMovie?.title]);
 
     const date = new Date(currentMovie?.release_date);
-    const lastMovie = fetStore.results?.length === fetStore.movieIndex + 1 && fetStore.totalPages === +page;
+    const lastMovie = movieStorage.results?.length === movieStorage.movieIndex + 1 && movieStorage.totalPages === +page;
 
     const compare = useCallback((element: { id: number }) => element.id === +id, [id]);
 
@@ -50,7 +50,9 @@ const Modal: React.FC = () => {
                         (!lastMovie) &&
                         <Link
                             to={
-                                (fetStore.movieIndex < fetStore.results?.length - 1) ? `/${+page}/movie/${fetStore.results?.[fetStore.movieIndex + 1]?.id}` : `/${+page + 1}/movie/${fetStore.npMovieId}`
+                                (movieStorage.movieIndex < movieStorage.results?.length - 1)
+                                    ? `/${+page}/movie/${movieStorage.results?.[movieStorage.movieIndex + 1]?.id}`
+                                    : `/${+page + 1}/movie/${movieStorage.npMovieId}`
                             }>
                             <button>
                                 <span>Next movie</span>
@@ -71,14 +73,14 @@ const Modal: React.FC = () => {
                             <button
                                 className={style.button}
                                 onClick={() => {
-                                    favStore.favList.some(compare) ? favStore.removeMovie(+id) : favStore.addMovie({
+                                    favoriteStorage.favList.some(compare) ? favoriteStorage.removeMovie(+id) : favoriteStorage.addMovie({
                                         id: +id,
                                         title: currentMovie.title,
                                         overview: currentMovie.overview,
                                         poster_path: currentMovie.poster_path
                                     });
                                 }}>
-                                {favStore.favList.some(compare) ? 'Unfavorite' : 'Add to favorite'}
+                                {favoriteStorage.favList.some(compare) ? 'Unfavorite' : 'Add to favorite'}
                             </button>
                         </div>
                         <div className={style.modal_movie__title}>

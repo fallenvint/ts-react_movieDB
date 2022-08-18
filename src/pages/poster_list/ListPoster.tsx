@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {FC} from 'react';
 import {Link} from 'react-router-dom';
 import noposter from '../../img/no-image.png'
 import style from './List.module.css';
@@ -14,7 +14,7 @@ export interface IListPoster {
     page: number
 }
 
-const ListPoster: React.FC<IListPoster> = ({movieItem, page}) => {
+const ListPoster: FC<IListPoster> = ({movieItem, page}) => {
     return (
         <div className={style.poster} key={movieItem.id}>
             <Link to={`/${page}/movie/${movieItem.id}`}>

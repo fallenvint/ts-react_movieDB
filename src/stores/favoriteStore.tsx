@@ -16,7 +16,7 @@ const favoriteStore = () => {
             this.favList = JSON.parse((localStorage.getItem('fav-movies') || '{}'));
         },
         removeMovie(id: number) {
-            localStorage.setItem('fav-movies', JSON.stringify(this.jsFavList.filter((item: {id: number}) => item.id !== id)));
+            localStorage.setItem('fav-movies', JSON.stringify(this.jsFavList.filter((item: { id: number }) => item.id !== id)));
             this.favList = JSON.parse((localStorage.getItem('fav-movies') || '{}'));
         }
     }, {
@@ -28,4 +28,4 @@ const favoriteStore = () => {
     });
 };
 
-export const favStore = favoriteStore();
+export const favoriteStorage = favoriteStore();

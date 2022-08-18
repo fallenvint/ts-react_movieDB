@@ -1,24 +1,24 @@
-import React, {useEffect} from 'react';
+import React, {FC, useEffect} from 'react';
 import {observer} from 'mobx-react';
-import {favStore} from '../../stores';
+import {favoriteStorage} from '../../stores';
 import style from './Favorite.module.css';
 import noposter from '../../img/no-image.png';
 
 const posterUrl = 'https://image.tmdb.org/t/p/w342';
 
-const Favorite: React.FC = () => {
+const Favorite: FC = () => {
     useEffect(() => {
-        favStore.updateFavList();
+        favoriteStorage.updateFavList();
         document.title = 'My favorites';
     }, []);
 
-    if (!!favStore.jsFavList.length) {
+    if (!!favoriteStorage.jsFavList.length) {
         return (
             <div>
                 <div className="page-title">My favorite</div>
                 <div className={`${style.favorites} page-content`}>
                     {
-                        favStore.jsFavList.map((movie: {
+                        favoriteStorage.jsFavList.map((movie: {
                             id: number,
                             title: string,
                             overview: string,
@@ -38,7 +38,7 @@ const Favorite: React.FC = () => {
                                             <div>
                                                 <button
                                                     className={style.button}
-                                                    onClick={() => favStore.removeMovie(movie.id)}
+                                                    onClick={() => favoriteStorage.removeMovie(movie.id)}
                                                 >
                                                     Unfavorite
                                                 </button>

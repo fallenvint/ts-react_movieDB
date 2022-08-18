@@ -1,2 +1,2 @@
 export * from './favoriteStore';
-export * from './fetchStore';
+export * from './movieStore';

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {FC} from 'react';
 import {Link, NavLink} from 'react-router-dom';
 import cn from 'classnames';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
@@ -6,7 +6,7 @@ import {faCirclePlay, faStar} from '@fortawesome/free-regular-svg-icons';
 import {faStar as farStar} from '@fortawesome/free-solid-svg-icons';
 import style from './Header.module.css';
 
-const Header: React.FC = () => {
+const Header: FC = () => {
     return (
         <header>
             <Link to="/">
