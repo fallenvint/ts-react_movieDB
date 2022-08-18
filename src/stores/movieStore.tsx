@@ -1,7 +1,17 @@
 import {action, computed, makeObservable, observable, runInAction, toJS} from 'mobx';
 import axios from 'axios';
 
-const fetchStore = () => {
+const fetchMoviesJSON = async (pageNum: number) => {
+    try {
+        const response = await axios.get(`https://api.themoviedb.org/3/movie/now_playing?api_key=ebea8cfca72fdff8d2624ad7bbf78e4c&page=${pageNum}`);
+
+        return await response;
+    } catch (error) {
+        throw new Error(`Unable to get movies that use ${pageNum} page number`);
+    }
+};
+
+const movieStore = () => {
     return makeObservable({
         data: {},
         movieId: 1,
@@ -19,8 +29,8 @@ const fetchStore = () => {
             this.movieId = id;
         },
         fetchPage(page: number) {
-            axios.get(`https://api.themoviedb.org/3/movie/now_playing?api_key=ebea8cfca72fdff8d2624ad7bbf78e4c&page=${page}`)
-                .then((json) => {
+            fetchMoviesJSON(page).then(
+                json => {
                     runInAction(() => {
                         this.data = json.data;
                     });
@@ -28,14 +38,13 @@ const fetchStore = () => {
         },
         setNpMovieId(page: number) {
             page < this.totalPages &&
-            axios.get(`https://api.themoviedb.org/3/movie/now_playing?api_key=ebea8cfca72fdff8d2624ad7bbf78e4c&page=${page + 1}`)
-                .then(
-                    json => {
-                        runInAction(() => {
-                            this.npMovieId = json.data.results[0]?.id
-                        });
-                    }
-                );
+            fetchMoviesJSON(page + 1).then(
+                json => {
+                    runInAction(() => {
+                        this.npMovieId = json.data.results[0]?.id
+                    });
+                }
+            );
         }
     }, {
         data: observable,
@@ -50,4 +59,4 @@ const fetchStore = () => {
     });
 };
 
-export const fetStore = fetchStore();
+export const movieStorage = movieStore();
